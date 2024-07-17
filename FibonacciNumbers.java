@@ -21,7 +21,8 @@ public class FibonacciNumbers extends JFrame
    private final JLabel nJLabel = new JLabel("Fibonacci of 1: ");
    private final JLabel nFibonacciJLabel = 
       new JLabel(String.valueOf(n2));
-   private final JButton nextNumberJButton = new JButton("Next Number");
+      private final JButton previousNumberJButton = new JButton("Previous Number");
+      private final JButton nextNumberJButton = new JButton("Next Number");
 
    // constructor
    public FibonacciNumbers()
@@ -71,7 +72,30 @@ public class FibonacciNumbers extends JFrame
       eventThreadJPanel.setBorder(new TitledBorder(
          new LineBorder(Color.BLACK), "Without SwingWorker"));
       eventThreadJPanel.add(nJLabel);
-      eventThreadJPanel.add(nFibonacciJLabel); 
+      eventThreadJPanel.add(nFibonacciJLabel);
+
+      previousNumberJButton.addActionListener(
+         new ActionListener()
+         {
+            public void actionPerformed(ActionEvent event)
+            {
+               if (count > 1)
+               {
+                  // calculate the Fibonacci number after n2
+                  long temp = n2 - n1;
+                  n2 = n1;
+                  n1 = temp;
+                  --count;
+
+                  // display the previous Fibonacci number
+                  nJLabel.setText("Fibonacci of " + count + ": ");
+                  nFibonacciJLabel.setText(String.valueOf(n2));
+               }
+            }
+         } // end anonymous inner class
+      ); // end call to addActionListener
+      eventThreadJPanel.add(previousNumberJButton);
+
       nextNumberJButton.addActionListener(
          new ActionListener()
          {
@@ -103,20 +127,4 @@ public class FibonacciNumbers extends JFrame
       FibonacciNumbers application = new FibonacciNumbers();
       application.setDefaultCloseOperation(EXIT_ON_CLOSE);
    } 
-} // end class FibonacciNumbers
-
-/*************************************************************************
-* (C) Copyright 1992-2015 by Deitel & Associates, Inc. and               *
-* Pearson Education, Inc. All Rights Reserved.                           *
-*                                                                        *
-* DISCLAIMER: The authors and publisher of this book have used their     *
-* best efforts in preparing the book. These efforts include the          *
-* development, research, and testing of the theories and programs        *
-* to determine their effectiveness. The authors and publisher make       *
-* no warranty of any kind, expressed or implied, with regard to these    *
-* programs or to the documentation contained in these books. The authors *
-* and publisher shall not be liable in any event for incidental or       *
-* consequential damages in connection with, or arising out of, the       *
-* furnishing, performance, or use of these programs.                     *
-*************************************************************************/
-  
+}
